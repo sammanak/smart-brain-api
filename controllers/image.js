@@ -1,3 +1,4 @@
+// Clarifai API Face Detecting
 const Clarifai = require('clarifai');
 
 const app = new Clarifai.App({
