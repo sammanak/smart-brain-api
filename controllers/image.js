@@ -1,4 +1,5 @@
-const Clarifai = require('clarifai')
+// Clarifai API Face Detech
+const Clarifai = require('clarifai');
 
 const app = new Clarifai.App({
  apiKey: process.env.CLARIFAI_API_KEY
