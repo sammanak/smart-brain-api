@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const redis = require("redis");
 
 // Setup redis
-redisClient = redis.createClient(process.env.REDIS_URI);
+redisClient = redis.createClient(process.env.REDIS_URL);
 
 const capitalizeEachWords = (str) => str.toLowerCase().replace(/^\w|\s\w/g, (letter) => letter.toUpperCase())
 
