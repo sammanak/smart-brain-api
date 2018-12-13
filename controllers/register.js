@@ -1,41 +1,15 @@
-const jwt = require('jsonwebtoken');
-const redis = require("redis");
-
-// Setup redis
-redisClient = redis.createClient('redis://h:pda9136bf2909da97579e290e6f0d82caba7ee55fb0f1134717728c8d9a96b0c6@ec2-18-213-155-182.compute-1.amazonaws.com:30989');
-
 const capitalizeEachWords = (str) => str.toLowerCase().replace(/^\w|\s\w/g, (letter) => letter.toUpperCase())
 
-const signToken = (email) => {
-	const jwtPayload = { email };
-	return jwt.sign(jwtPayload, 'JWT_SECRET', { expiresIn: '2 days' });
-}
-
-const setToken = (key, value) => {
-	return Promise.resolve(redisClient.set(key, value))
-}
-
-const createSessions = (user) => {
-	// JWT Token, return users data
-	const { email, id } = user;
-	const token = signToken(email);
-	return setToken(token, id)
-		.then(() => {
-			return { success: 'true', userId: id, token }
-		})
-		.catch(console.log)
-}
-
-const handleRegister = (db, bcrypt, req, res) => {
+const handleRegister = (req, res, db, bcrypt) => {
 	const { email, name, password } = req.body;
 
 	if ( !email || !name || !password) {
-		return Promise.reject('incorrect register form submission');
+		return res.status(400).json('unable to register');
 	}
 
 	var hash = bcrypt.hashSync(password);
-	// console.log(hash)
-	return db.transaction(trx => {
+
+	db.transaction(trx => {
 		trx.insert({
 			hash: hash,
 			email: email.toLowerCase()
@@ -50,8 +24,9 @@ const handleRegister = (db, bcrypt, req, res) => {
 					email: loginEmail[0].toLowerCase(),
 					joined: new Date()
 				})
-				.then(user => user[0])
-				.catch(error => Promise.reject('There is problem to register user'))
+				.then(user => {
+					res.json(user[0]);
+				})
 		})
 		.then(trx.commit)
 		.catch(trx.rollback)
@@ -59,19 +34,6 @@ const handleRegister = (db, bcrypt, req, res) => {
 	.catch(error => res.status(400).json('unable to register'));
 }
 
-const rigisterAuthentication = (db, bcrypt) => (req, res) => {
-	const { authorization } = req.headers;
-	return authorization ? getAuthTokenId(req, res) : 
-		handleRegister(db, bcrypt, req, res)
-			.then(data => {
-				return createSessions(data);
-			})
-			.then(session => res.json(session))
-			.catch(error => res.status(400).json(error))
-	
-}
-
 module.exports = {
-	rigisterAuthentication: rigisterAuthentication,
-	redisClient: redisClient
+	handleRegister: handleRegister
 }
