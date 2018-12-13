@@ -36,23 +36,22 @@ app.post('/signin', signin.handleSignin(db, bcrypt))
 // app.post('/signin', signin.signinAuthentication(db, bcrypt))
 
 // REGISTER
-app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
-// app.post('/register', register.rigisterAuthentication(db, bcrypt))
-
+// app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
+app.post('/register', register.rigisterAuthentication(db, bcrypt))
 
 // PROFILE # auth.requireAuth for Authorization Middleware
-app.get('/profile/:id', (req, res) => { profile.handleGetProfile(req, res, db) })
-// app.get('/profile/:id', auth.requireAuth, (req, res) => { profile.handleGetProfile(req, res, db) })
-app.post('/profile/:id', (req, res) => { profile.handleProfileUpdate(req, res, db) })
-// app.post('/profile/:id', auth.requireAuth, (req, res) => { profile.handleProfileUpdate(req, res, db) })
+// app.get('/profile/:id', (req, res) => { profile.handleGetProfile(req, res, db) })
+app.get('/profile/:id', auth.requireAuth, (req, res) => { profile.handleGetProfile(req, res, db) })
+// app.post('/profile/:id', (req, res) => { profile.handleProfileUpdate(req, res, db) })
+app.post('/profile/:id', auth.requireAuth, (req, res) => { profile.handleProfileUpdate(req, res, db) })
 
 // ENTRIES
-app.put('/image', (req, res) => { image.imageEntriesUpdate(req, res, db) })
-// app.put('/image', auth.requireAuth, (req, res) => { image.imageEntriesUpdate(req, res, db) })
+// app.put('/image', (req, res) => { image.imageEntriesUpdate(req, res, db) })
+app.put('/image', auth.requireAuth, (req, res) => { image.imageEntriesUpdate(req, res, db) })
 
 // API CALL
-app.post('/imageurl', (req, res) => { image.handleApiCall(req, res) })
-// app.post('/imageurl', auth.requireAuth, (req, res) => { image.handleApiCall(req, res) })
+// app.post('/imageurl', (req, res) => { image.handleApiCall(req, res) })
+app.post('/imageurl', auth.requireAuth, (req, res) => { image.handleApiCall(req, res) })
 
 app.listen(process.env.PORT || 3001, () => {
 	console.log(`app is running on port' ${process.env.PORT}`);
