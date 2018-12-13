@@ -4,20 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -L server.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sammanak/smart-brain-api-docker-jwt-session-redis.git"
+    "url": "git+https://github.com/sammanak/smart-brain-api.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sammanak/smart-brain-api-docker-jwt-session-redis.git/issues"
+    "url": "https://github.com/sammanak/smart-brain-api/issues"
   },
-  "homepage": "https://github.com/sammanak/smart-brain-api-docker-jwt-session-redis.git#readme",
+  "homepage": "https://github.com/sammanak/smart-brain-api#readme",
   "devDependencies": {
-    "nodemon": "^1.18.3"
+    "nodemon": "^1.18.8"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
