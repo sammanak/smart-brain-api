@@ -4,4 +4,4 @@ const handleSignOut = (db, bcrypt) => {
 
 module.exports = {
   handleSignOut: handleSignOut
-}
+} 

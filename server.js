@@ -32,8 +32,8 @@ app.get('/', (req, res) => {
 })
 
 // SIGN IN
-app.post('/signin', signin.handleSignin(db, bcrypt))
-// app.post('/signin', signin.signinAuthentication(db, bcrypt))
+// app.post('/signin', signin.handleSignin(db, bcrypt))
+app.post('/signin', signin.signinAuthentication(db, bcrypt))
 
 // REGISTER
 // app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })

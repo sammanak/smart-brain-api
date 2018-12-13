@@ -9,7 +9,7 @@ const capitalizeEachWords = (str) => str.toLowerCase().replace(/^\w|\s\w/g, (let
 const signToken = (email) => {
 	const jwtPayload = { email };
 	return jwt.sign(jwtPayload, 'JWT_SECRET', { expiresIn: '2 days' });
-}
+} 
 
 const setToken = (key, value) => {
 	return Promise.resolve(redisClient.set(key, value))

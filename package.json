@@ -16,7 +16,6 @@
     "url": "https://github.com/sammanak/smart-brain-api/issues"
   },
   "homepage": "https://github.com/sammanak/smart-brain-api#readme",
-  "devDependencies": {},
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",

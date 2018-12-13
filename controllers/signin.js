@@ -11,7 +11,7 @@ const handleSignin = (db, bcrypt, req, res) => {
 		// return res.status(400).json('incorrect form submission');
 		return Promise.reject('incorrect signin form submission');
 	}
-
+ 
 	return db.select('email', 'hash').from('tblogin')
 		.where('email', '=', email.toLowerCase())
 		.then(data => {
